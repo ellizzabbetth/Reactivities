@@ -36,6 +36,9 @@ namespace API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Value>> Get(int id)
         {
+            // FindAsync - find an entity with the given primary key
+            // values and if it does not find the value with that id
+            // then it's going to return null
             var value = await _context.Values.FindAsync(id);
             return Ok(value);
         }
