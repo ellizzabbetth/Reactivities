@@ -1,22 +1,27 @@
 import React, {Component} from 'react';
 
-import './App.css';
 import axios from 'axios';
 import { Header, Icon, List } from 'semantic-ui-react';
+import { IActivity } from '../models/activity';
 
-class App extends Component {
+
+interface IState {
+  activities: IActivity[]
+}
+
+class App extends Component<{}, IState> {
  
-  state = {
-    values: []
+  readonly state: IState = {
+    activities: []
   }
   // set state triggering render of component
   componentDidMount(){
     // http request
     // axios get method returns promise
-    axios.get('http://localhost:5000/api/values')    
+    axios.get<IActivity[]>('http://localhost:5000/api/activities')    
     .then((response) => {
       this.setState({
-        values: response.data
+        activities: response.data
       })
     })
 
@@ -42,8 +47,8 @@ class App extends Component {
              {/* javascript -- this bc referencing a class prop. 
                  'any' gives us no type safety. It just the same
                  as js with no typescript */}
-             {this.state.values.map((value: any) => (
-               <List.Item key={value.id}>{value.name}</List.Item>
+             {this.state.activities.map((activity) => (
+               <List.Item key={activity.id}>{activity.title}</List.Item>
              ))}
 
 
